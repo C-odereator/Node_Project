@@ -1,7 +1,9 @@
 const express = require("express");
 const { router } = require("./Routes/router");
 const { connectMongo } = require("./Connection/Connect");
-
+const passport = require("passport");
+const { URL } = require("./Models/models");
+const localStrategy = require("passport-local").Strategy;
 // creating app
 const app = express();
 
@@ -12,6 +14,35 @@ connectMongo("mongodb://localhost:27017/short-url").then(() => {
 
 // for using data from the body
 app.use(express.json());
+
+const logRequest = (req, res, next) => {
+  console.log(
+    `${new Date().toLocaleString()} Request Made to : ${req.originalUrl}`
+  );
+  next();
+};
+app.use(logRequest);
+
+passport.use(
+  new localStrategy(async (username, password, done) => {
+    try {
+      console.log("Recieved Credentials ", username, password);
+      const user = await URL.findOne({ username: username });
+      if (!user) {
+        return done(null, false, { message: "Incorrect Username" });
+
+        const isPasswordmatch = user.password === password ? true : false;
+        if (isPasswordmatch) {
+          return done(null, user);
+        } else {
+          return done(null, false, { message: "Incorrect Password" });
+        }
+      }
+    } catch (err) {
+      return done(err);
+    }
+  })
+);
 
 app.use("/user", router);
 
