@@ -1,4 +1,4 @@
-const { data } = require("../Models/models");
+const { URL } = require("../Models/models");
 
 let getData = async (req, res) => {
   try {
@@ -17,7 +17,7 @@ const addData = async (req, res) => {
     const data = req.body;
 
     // create a new URL
-    const newUrl = new data(data);
+    const newUrl = new URL(data);
 
     // save the new URL
     const savedData = await newUrl.save();
@@ -33,7 +33,7 @@ const addData = async (req, res) => {
 let getDataByID = async (req, res) => {
   try {
     const id = req.params.id;
-    const data = await data.findById(id);
+    const data = await URL.findById(id);
     if (data) {
       res.json(data);
     } else {
@@ -50,7 +50,7 @@ const UpdateById = async (req, res) => {
   try {
     const id = req.params.id;
     const data = req.body;
-    const updatedData = await data.findByIdAndUpdate(id, data, { new: true });
+    const updatedData = await URL.findByIdAndUpdate(id, data, { new: true });
     if (updatedData) {
       res.json(updatedData);
       console.log("Data Fetched");
