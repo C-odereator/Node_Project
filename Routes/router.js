@@ -16,6 +16,7 @@ router
   .put("/:id", UpdateById)
   .delete("/:id", DeleteById);
 
+// export the router
 module.exports = {
   router,
 };
