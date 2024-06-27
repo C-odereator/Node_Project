@@ -17,7 +17,7 @@ router
   .delete("/:id", DeleteById);
 
 // export the router
-// 1. git add
+// 1. git add .
 // 2. git commit -m "text"
 // 3. git push
 module.exports = {
