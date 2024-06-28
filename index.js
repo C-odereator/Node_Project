@@ -12,7 +12,7 @@ connectMongo("mongodb://localhost:27017/short-url").then(() => {
   console.log("Connected to MongoDB");
 });
 
-// for using data from the body
+// using data from the body
 app.use(express.json());
 
 const logRequest = (req, res, next) => {
