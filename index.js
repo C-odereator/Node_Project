@@ -21,7 +21,10 @@ const logRequest = (req, res, next) => {
   );
   next();
 };
+
 app.use(logRequest);
+
+app.use(passport.initialize());
 
 passport.use(
   new localStrategy(async (username, password, done) => {
@@ -43,6 +46,12 @@ passport.use(
     }
   })
 );
+
+const authorize = passport.authenticate("local", { session: false });
+
+app.get("/", authorize, (req, res) => {
+  res.send("Hello World");
+});
 
 app.use("/user", router);
 

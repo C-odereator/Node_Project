@@ -15,7 +15,7 @@ const urlSchema = new mongoose.Schema(
       required: true,
       unique: true,
     },
-    password: {
+    password1: {
       type: String,
       required: true,
     },
