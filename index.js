@@ -46,7 +46,7 @@ passport.use(
     }
   })
 );
-
+s;
 const authorize = passport.authenticate("local", { session: false });
 
 app.get("/", authorize, (req, res) => {
